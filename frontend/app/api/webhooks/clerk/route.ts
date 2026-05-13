@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       const { id } = evt.data
       if (!id) {
         console.error('[clerk webhook] user.deleted with no id')
-        return new Response('No user id', { status: 400 })
+        return new Response('No user id', { status: 400})
       }
 
       const { error } = await supabaseAdmin.from('users').delete().eq('id', id)
