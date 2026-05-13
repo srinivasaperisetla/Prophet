@@ -3,13 +3,16 @@ import Link from 'next/link'
 import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import NavItems from './NavItems'
 import { Button } from './ui/button'
+import { Trophy } from 'lucide-react'
 
 const Navbar = () => {
 	return (
 		<nav className='navbar'>
 			<Link href='/'>
 				<div className='flex items-center gap-2.5 cursor-pointer'>
-					<Image src='/images/logo.svg' alt='logo' width={46} height={44} />
+					{/* <Image src='/images/logo.svg' alt='logo' width={46} height={44} /> */}
+					<Trophy className='h-8 w-8 text-primary' />
+					<p>Prophet</p>
 				</div>
 			</Link>
 
