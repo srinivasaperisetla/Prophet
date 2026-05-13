@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabaseClient } from '@/lib/supabase-client'
 
 type RankedBet = {
   id: string
@@ -31,7 +31,7 @@ const RankedBets = () => {
   useEffect(() => {
     // 1. Initial fetch
     const loadInitial = async () => {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('ranked_bets')
         .select('*')
         .order('edge', { ascending: false })
@@ -54,7 +54,7 @@ const RankedBets = () => {
     loadInitial()
 
     // 2. Subscribe to changes
-    const channel = supabase
+    const channel = supabaseClient
       .channel('ranked_bets_changes')
       .on(
         'postgres_changes',
@@ -77,7 +77,7 @@ const RankedBets = () => {
 
     // 3. Cleanup on unmount
     return () => {
-      supabase.removeChannel(channel)
+      supabaseClient.removeChannel(channel)
     }
   }, [])
 
