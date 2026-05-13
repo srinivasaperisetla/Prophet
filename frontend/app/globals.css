@@ -1,26 +1,243 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@custom-variant dark (&:is(.dark *));
+/* ---------- THEME TOKENS (Tailwind v4 reads these) ---------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand palette exposed to Tailwind as bg-brand-500, text-brand-100, etc. */
+  --color-brand-50:  var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-roboto-mono);
+  --font-inter: var(--font-inter-tight);
+  --font-heading: var(--font-sans);
+  /* shadcn semantic tokens (unchanged) */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
+/* ---------- BRAND + SEMANTIC TOKENS ---------- */
+:root {
+  /* === Brand palette — change these to rebrand the whole app === */
+  --brand-50:  oklch(0.97 0.02 295);
+  --brand-100: oklch(0.93 0.05 295);
+  --brand-200: oklch(0.86 0.10 295);
+  --brand-300: oklch(0.77 0.15 295);
+  --brand-400: oklch(0.68 0.20 295);
+  --brand-500: oklch(0.58 0.24 295);  /* main brand — vivid purple */
+  --brand-600: oklch(0.50 0.23 295);
+  --brand-700: oklch(0.42 0.20 295);
+  --brand-800: oklch(0.34 0.15 295);
+  --brand-900: oklch(0.24 0.10 295);
+  /* Semantic shadcn tokens → mapped to brand where it makes sense */
+  --background: oklch(20.5% 0 0);
+  --foreground: oklch(0.977 0.014 308.299);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: var(--brand-500);                /* <- brand wired in */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: var(--brand-100);                 /* <- brand wired in */
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: var(--brand-500);                   /* focus ring matches brand */
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: var(--brand-400);                /* slightly brighter on dark */
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: var(--brand-800);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--brand-400);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+body { font-family: var(--font-inter-tight); }
+/* ---------- BASE: typography + layout primitives ---------- */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html { @apply font-sans antialiased; }
+  body {
+    @apply bg-background text-foreground;
+  }
+  /* Responsive type scale — write headings once, they scale everywhere */
+  h1 {
+    @apply font-heading font-semibold tracking-tight text-balance
+           text-4xl sm:text-5xl lg:text-6xl
+           leading-[1.05];
+  }
+  h2 {
+    @apply font-heading font-semibold tracking-tight text-balance
+           text-3xl sm:text-4xl lg:text-5xl
+           leading-[1.1];
+  }
+  h3 {
+    @apply font-heading font-semibold tracking-tight text-balance
+           text-2xl sm:text-3xl
+           leading-[1.2];
+  }
+  h4 {
+    @apply font-heading font-semibold tracking-tight
+           text-xl sm:text-2xl
+           leading-[1.25];
+  }
+  h5 { @apply font-heading font-semibold text-lg sm:text-xl leading-snug; }
+  h6 { @apply font-heading font-semibold text-base sm:text-lg leading-snug uppercase tracking-wide text-muted-foreground; }
+  p {
+    @apply text-base sm:text-base text-pretty leading-relaxed text-foreground/90;
+  }
+  small { @apply text-sm text-muted-foreground; }
+  a {
+    @apply underline-offset-4 text-foreground transition-colors;
+  }
+  code, pre, kbd, samp { @apply font-mono; }
+  code { @apply rounded bg-muted px-1.5 py-0.5 text-[0.9em]; }
+  blockquote {
+    @apply border-l-2 border-border pl-4 italic text-muted-foreground;
+  }
+  ul { @apply list-disc list-outside pl-6 space-y-1; }
+  ol { @apply list-decimal list-outside pl-6 space-y-1; }
+  hr { @apply border-border my-8; }
+  main {
+    @apply mx-auto flex flex-col gap-8 h-full
+           w-full max-w-[1400px]
+           px-4 sm:px-6 lg:px-14
+           pt-10 pb-20;
+  }
+  /* Better focus ring everywhere by default */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+  /* Respect users who don't want motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+/* ---------- REUSABLE UTILITIES ---------- */
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+@utility flex-between {
+  @apply flex items-center justify-between;
+}
+@utility stack {
+  @apply flex flex-col gap-4;
+}
+@utility container-app {
+  @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-14;
+}
+@utility text-gradient-brand {
+  @apply bg-gradient-to-b from-foreground via-foreground to-brand-400
+         bg-clip-text text-transparent;
+}
+@utility surface {
+  @apply bg-card text-card-foreground border border-border rounded-xl;
+}
+/* ---------- COMPONENTS ---------- */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .navbar {
+    @apply sticky top-0 z-50
+           mx-auto flex w-full items-center justify-between
+           px-14 py-6 max-sm:px-4
+           bg-gradient-to-b from-mauve-900 via-mauve-900/60 to-transparent;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
+
