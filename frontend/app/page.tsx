@@ -1,8 +1,10 @@
 import React from 'react'
+import PricingCard from '@/components/PricingCard'  
 
 const LandingPage = () => {
   return (
     <main>
+      <PricingCard />
       <h1>
         Prophet - h1adfad
       </h1>

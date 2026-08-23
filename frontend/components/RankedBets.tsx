@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabaseClient } from '@/lib/supabase-client'
+import { useSupabaseClient } from '@/lib/supabase-auth'
+
 
 type RankedBet = {
   id: string
@@ -24,6 +25,7 @@ function rowKey(bet: RankedBet): string {
 }
 
 const RankedBets = () => {
+  const supabase = useSupabaseClient()
   const [bets, setBets] = useState<Map<string, RankedBet>>(new Map())
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -31,7 +33,7 @@ const RankedBets = () => {
   useEffect(() => {
     // 1. Initial fetch
     const loadInitial = async () => {
-      const { data, error } = await supabaseClient
+      const { data, error } = await supabase
         .from('ranked_bets')
         .select('*')
         .order('edge', { ascending: false })
@@ -54,7 +56,7 @@ const RankedBets = () => {
     loadInitial()
 
     // 2. Subscribe to changes
-    const channel = supabaseClient
+    const channel = supabase
       .channel('ranked_bets_changes')
       .on(
         'postgres_changes',
@@ -77,9 +79,9 @@ const RankedBets = () => {
 
     // 3. Cleanup on unmount
     return () => {
-      supabaseClient.removeChannel(channel)
+      supabase.removeChannel(channel)
     }
-  }, [])
+  }, [supabase])
 
   // Sort once for rendering — Map preserves insertion order but we want edge desc
   const sortedBets = Array.from(bets.values())
