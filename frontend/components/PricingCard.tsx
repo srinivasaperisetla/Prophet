@@ -13,13 +13,15 @@ const features = [
 
 const PricingCard = () => {
   return (
-    <div className="surface flex w-full max-w-sm flex-col gap-6 p-8">
+    <div className="surface flex w-full max-w-sm flex-col gap-6 border-border p-8 shadow-lg shadow-black/20">
       <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+        <span className="text-sm font-medium uppercase tracking-wide text-primary">
           Pro
         </span>
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold tracking-tight">$19</span>
+          <span className="text-4xl font-bold tracking-tight text-foreground">
+            $19
+          </span>
           <span className="text-sm text-muted-foreground">/month</span>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -27,9 +29,9 @@ const PricingCard = () => {
         </p>
       </div>
 
-      <ul className="flex flex-col gap-3 list-none pl-0">
+      <ul className="flex list-none flex-col gap-3 pl-0">
         {features.map((feature) => (
-          <li key={feature} className="flex items-start gap-2 text-sm">
+          <li key={feature} className="flex items-start gap-2 text-sm text-foreground">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
             <span>{feature}</span>
           </li>

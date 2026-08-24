@@ -93,37 +93,37 @@ const RankedBets = () => {
   }
 
   if (error) {
-    return <main className="p-8 text-red-600">Error: {error}</main>
+    return <main className="p-8 text-destructive">Error: {error}</main>
   }
 
   return (
     <main className="p-8 font-mono text-sm">
-      <h1 className="text-xl font-bold mb-4">
+      <h1 className="mb-4 text-xl font-bold">
         Top +EV DFS Bets ({sortedBets.length})
       </h1>
 
       <table className="w-full border-collapse">
         <thead>
-          <tr className="border-b">
-            <th className="text-left p-2">Edge</th>
-            <th className="text-left p-2">Player</th>
-            <th className="text-left p-2">Market</th>
-            <th className="text-left p-2">Side</th>
-            <th className="text-right p-2">Line</th>
-            <th className="text-right p-2">Fair</th>
-            <th className="text-right p-2">Books</th>
-            <th className="text-left p-2">DFS Book</th>
-            <th className="text-left p-2">Matchup</th>
+          <tr className="border-b border-border text-muted-foreground">
+            <th className="p-2 text-left font-medium">Edge</th>
+            <th className="p-2 text-left font-medium">Player</th>
+            <th className="p-2 text-left font-medium">Market</th>
+            <th className="p-2 text-left font-medium">Side</th>
+            <th className="p-2 text-right font-medium">Line</th>
+            <th className="p-2 text-right font-medium">Fair</th>
+            <th className="p-2 text-right font-medium">Books</th>
+            <th className="p-2 text-left font-medium">DFS Book</th>
+            <th className="p-2 text-left font-medium">Matchup</th>
           </tr>
         </thead>
         <tbody>
           {sortedBets.map((bet) => (
-            <tr key={rowKey(bet)} className="border-b hover:bg-gray-50">
-              <td className="p-2 text-green-600 font-bold">
+            <tr key={rowKey(bet)} className="border-b border-border hover:bg-muted/40">
+              <td className="p-2 font-bold text-emerald-400">
                 +{(bet.edge * 100).toFixed(2)}%
               </td>
               <td className="p-2">{bet.player}</td>
-              <td className="p-2 text-gray-600">
+              <td className="p-2 text-muted-foreground">
                 {bet.market.replace('player_', '')}
               </td>
               <td className="p-2">{bet.side}</td>
@@ -133,7 +133,7 @@ const RankedBets = () => {
               </td>
               <td className="p-2 text-right">{bet.num_books}</td>
               <td className="p-2">{bet.dfs_book}</td>
-              <td className="p-2 text-gray-500 text-xs">{bet.matchup}</td>
+              <td className="p-2 text-xs text-muted-foreground">{bet.matchup}</td>
             </tr>
           ))}
         </tbody>
